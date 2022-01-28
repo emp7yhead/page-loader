@@ -1,15 +1,11 @@
-import os
+"""Tests for cli."""
+
 import pytest
-
-from page-loader.cli import cli
-
-
-def test_help_command():
-    exit_status = os.system('page-loader -h')
-    assert exit_status == 0
+from page_loader.cli import cli
 
 
 def test_cli_without_arg():
+    """Test without arguments."""
     with pytest.raises(SystemExit):
         cli.parse_arguments()
         pytest.fail()
