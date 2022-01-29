@@ -3,6 +3,8 @@
 import argparse
 import os
 
+DEFAULT_DIR = os.getcwd()
+
 
 def parse_arguments():
     """
@@ -17,28 +19,30 @@ def parse_arguments():
         description='Downloading web-page to local directory',
         add_help=False,
     )
-    options_group = parser.add_argument_group('options')
-    options_group.add_argument(
+    parser.add_argument(
         '-o',
         '--output',
         action='store',
-        default=os.getcwd(),
+        default=DEFAULT_DIR,
         help='output dir (default: "/app")',
         type=str,
     )
-    options_group.add_argument(
+    parser.add_argument(
         '-v',
         '--version',
         action='version',
         version='page-loader 0.1.0',
     )
-    options_group.add_argument(
+    parser.add_argument(
         '-h',
         '--help',
         action='help',
         help='dispaly help for command',
     )
-
-    parser.add_argument('url')
-
-    return parser.parse_args()
+    parser.add_argument(
+        'url',
+        help='url to download',
+        type=str,
+    )
+    args = parser.parse_args()
+    return args.output, args.url
