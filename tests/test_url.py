@@ -32,12 +32,12 @@ def test_check_dir_error():
 
 
 @pytest.mark.parametrize('test_case, expected_result', TEST_TEMPLATE)
-def test_get_file_name(test_case, expected_result):
+def test_get_name(test_case, expected_result):
     """Test for url with and without scheme.
 
     Args:
         test_case: test url with/without scheme.
         expected_result: corect function result.
     """
-    test_result = url.get_file_name(test_case)
+    test_result = url.get_name(test_case)
     assert test_result == expected_result
