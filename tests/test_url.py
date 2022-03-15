@@ -1,34 +1,18 @@
 """Test for downloader."""
 
-import tempfile
-
 import pytest
 from page_loader.loader import url
 
 TEST_TEMPLATE = (
     (
-        'https://en.wikipedia.org/wiki/Python_(programming_language)',
-        'en-wikipedia-org-wiki-Python-(programming-language).html',
+        'https://en.wikipedia.org/wiki/Python',
+        'en-wikipedia-org-wiki-Python.html',
     ),
     (
-        'www.wikipedia.org/wiki/Python_(programming_language)',
-        'www-wikipedia-org-wiki-Python-(programming-language).html',
+        'www.wikipedia.org/wiki/Python',
+        'www-wikipedia-org-wiki-Python.html',
     ),
 )
-
-
-def test_check_dir():
-    """Test with existing directory."""
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        path = tmpdirname
-        assert url.check_dir(path) is True
-
-
-@pytest.mark.xfail
-def test_check_dir_error():
-    """Test for non-existent directory."""
-    path = '/there/no/dir'
-    assert url.check_dir(path) is True
 
 
 @pytest.mark.parametrize('test_case, expected_result', TEST_TEMPLATE)
