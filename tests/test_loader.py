@@ -15,7 +15,7 @@ def test_loader(requests_mock):
     Args:
         requests_mock: for mocking test url.
     """
-    requests_mock.get(TEST_URL, text='<html></html>')
+    requests_mock.get(TEST_URL, text='<html>\n</html>')
     with tempfile.TemporaryDirectory() as tmpdirname:
         path = tmpdirname
         page_path = download(TEST_URL, path)
