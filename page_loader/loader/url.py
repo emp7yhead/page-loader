@@ -2,58 +2,39 @@
 
 import os
 import re
+from typing import Tuple
 from urllib.parse import urlparse
-from xmlrpc.client import Boolean
 
-FILE_NAME_TEMPLATE = '{0}.html'
-
-
-def get_file_path(dir_path: str, url: str) -> str:
-    """Get path to save file.
-
-    Args:
-        dir_path: path to local existing directory.
-        url: url to download.
-
-    Returns:
-        str
-    """
-    file_name = get_file_name(url)
-    return os.path.join(dir_path, file_name)
+FILE_NAME_TEMPLATE = '{0}{1}'
 
 
-def get_file_name(url: str) -> str:
+def get_name(url: str, extension: str = '.html') -> str:
     """Get file name for downloading.
 
     Args:
         url: url to parse.
+        extension: extension of object.
 
     Returns:
             str
     """
-    parsed_url = urlparse(url)
-    if parsed_url.hostname:
-        url_without_scheme = parsed_url.hostname + parsed_url.path
-    else:
-        url_without_scheme = parsed_url.path
-    file_name_wihtout_symbols = re.split(r'\.|/|_', url_without_scheme)
-    return FILE_NAME_TEMPLATE.format('-'.join(file_name_wihtout_symbols))
+    url_without_scheme, ext = get_url_without_scheme_and_ext(url)
+    if ext:
+        extension = ext
+    file_name = re.sub(r'[^\w]', '-', url_without_scheme.rstrip('/'))
+    return FILE_NAME_TEMPLATE.format(file_name, extension)
 
 
-def check_dir(path: str) -> Boolean:
-    """Check directory existence.
-
-    # noqa: DAR401 Exeption
+def get_url_without_scheme_and_ext(url: str) -> Tuple:
+    """Get url without scheme and extension.
 
     Args:
-        path: path to directory.
+        url: url for file or page.
 
     Returns:
-        boolean
-
-    Raises:
-        Exeption: if directory does not exist. # noqa: DAR402
+        tuple
     """
-    if os.path.isdir(path):
-        return True
-    raise Exception('Chosen directory does not exist.')  # noqa: WPS454
+    parsed_url = urlparse(url)
+    root, ext = os.path.splitext(parsed_url.path)
+    url_without_scheme = os.path.join(parsed_url.netloc + root)
+    return url_without_scheme, ext
