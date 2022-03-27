@@ -9,6 +9,7 @@ from page_loader.loader.parser import update_page_and_files
 from page_loader.loader.url import get_name
 from page_loader.logger.exceptions import FileSystemError, NetworkError
 
+SUCCESS_DOWNLOAD_MSG = 'Page was successfully downloaded into {0}'
 SUCCESS_MSG = 'Successfully downloaded: {0}'
 FAIL_MSG = 'Failed to download: {0} \n{1}'
 DENY_MSG = 'Permission to {0} denied.'
@@ -55,6 +56,7 @@ def download(url: str, dir_path: str) -> str:  # noqa: WPS210
     if upd_files_paths:
         download_updated_files(dir_path, local_files_path, upd_files_paths)
 
+    logger.info(SUCCESS_DOWNLOAD_MSG.format(dir_path))
     return local_page_path
 
 
@@ -79,7 +81,7 @@ def save(local_path: str, resource: Union[bytes, str], mode='w') -> str:
         logger.debug(traceback.format_exc(8))
         logger.error(DENY_MSG.format(local_path))
         raise FileSystemError from exc
-    logger.info(SUCCESS_MSG.format(local_path))  # noqa: WPS421
+    logger.debug(SUCCESS_MSG.format(local_path))  # noqa: WPS421
     return local_path
 
 
@@ -130,5 +132,5 @@ def get_content(url: str) -> bytes:
         bytes
     """
     response = requests.get(url)
-    logger.info(GOT_CONTENT_MSG.format(url))
+    logger.debug(GOT_CONTENT_MSG.format(url))
     return response.content
