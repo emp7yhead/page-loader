@@ -1,24 +1,64 @@
 """Setup logging."""
-import json
-import logging
 import logging.config
-import os
+import logging.handlers
+
+CONFIG_DICT = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s | %(levelname)s] %(name)s | %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'advanced': {
+            'format': '%(asctime)s | [%(levelname)s] %(name)s [%(funcName)s:%(lineno)d]: %(message)s',
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'simple',
+            'stream': 'ext://sys.stdout',
+        },
+
+        'info_file_handler': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'INFO',
+            'formatter': 'simple',
+            'filename': 'info.log',
+            'maxBytes': 10485760,
+            'backupCount': 20,
+            'encoding': 'utf8',
+        },
+
+        'error_file_handler': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'ERROR',
+            'formatter': 'advanced',
+            'filename': 'errors.log',
+            'maxBytes': 10485760,
+            'backupCount': 20,
+            'encoding': 'utf8',
+        },
+    },
+
+    'loggers': {
+        'page_loader.loader.loader': {
+            'level': 'INFO',
+            'handlers': ['console', 'info_file_handler'],
+            'propagate': False,
+        },
+    },
+
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['console', 'info_file_handler', 'error_file_handler'],
+    },
+}
 
 
-def setup_logging(
-    default_path: str = 'logging_config.json',
-    default_level: int = logging.INFO,
-) -> None:
-    """Confugurate logging.
-
-    Args:
-        default_path: path to configuration JSON file.
-        default_level: setup default logging level.
-    """
-    path = default_path
-    if os.path.exists(path):
-        with open(path, 'rt') as setup_file:
-            config = json.load(setup_file)
-        logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
+def setup_logging() -> None:
+    """Confugurate logging."""
+    logging.config.dictConfig(CONFIG_DICT)
