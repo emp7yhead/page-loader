@@ -96,7 +96,7 @@ def download_resources(files_path: Dict, dir_path: str) -> None:
     with IncrementalBar(
         'In Progress',
         max=len(files_path),
-        suffix='%(percent)d%%',
+        suffix='%(percent)d%%',  # noqa: WPS323
     ) as progress_bar:
         for url, local_name in files_path.items():
             try:  # noqa: WPS229
