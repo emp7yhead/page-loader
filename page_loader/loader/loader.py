@@ -132,5 +132,6 @@ def get_content(url: str) -> bytes:
         bytes
     """
     response = requests.get(url)
+    response.raise_for_status()
     logger.debug(GOT_CONTENT_MSG.format(url))
     return response.content
