@@ -24,7 +24,7 @@ def parse_arguments():
         '--output',
         action='store',
         default=DEFAULT_DIR,
-        help='output dir (default: "/app")',
+        help='output dir (default: "{0}")'.format(DEFAULT_DIR),
         type=str,
     )
     parser.add_argument(
@@ -45,4 +45,4 @@ def parse_arguments():
         type=str,
     )
     args = parser.parse_args()
-    return args.output, args.url
+    return args.url, args.output
