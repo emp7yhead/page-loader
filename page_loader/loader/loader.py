@@ -84,7 +84,7 @@ def save(local_path: str, resource: Union[bytes, str], mode='w') -> str:
 
 
 def download_resources(files_path: Dict, dir_path: str) -> None:
-    """Download content in local path.
+    """Download content to local path.
 
     Args:
         files_path: path to download files
@@ -130,7 +130,5 @@ def get_content(url: str) -> bytes:
         bytes
     """
     response = requests.get(url)
-    status_code = response.status_code
     logger.info(GOT_CONTENT_MSG.format(url))
-    logger.error(STATUS_MSG.format(url, status_code))
     return response.content
