@@ -8,6 +8,7 @@ import requests
 from page_loader.loader.parser import update_page_and_files
 from page_loader.loader.url import get_name
 from page_loader.logger.exceptions import FileSystemError, NetworkError
+from progress.bar import IncrementalBar
 
 SUCCESS_DOWNLOAD_MSG = 'Page was successfully downloaded into {0}'
 SUCCESS_MSG = 'Successfully downloaded: {0}'
@@ -81,7 +82,7 @@ def save(local_path: str, resource: Union[bytes, str], mode='w') -> str:
         logger.debug(traceback.format_exc(8))
         logger.error(DENY_MSG.format(local_path))
         raise FileSystemError from exc
-    logger.debug(SUCCESS_MSG.format(local_path))  # noqa: WPS421
+    logger.debug(SUCCESS_MSG.format(local_path))
     return local_path
 
 
@@ -92,17 +93,23 @@ def download_resources(files_path: Dict, dir_path: str) -> None:
         files_path: path to download files
         dir_path: path to save content
     """
-    for url, local_name in files_path.items():
-        try:  # noqa: WPS229
-            resource = get_content(url)
-            local_path = os.path.join(dir_path, local_name)
-            save(local_path, resource, 'wb')
-        except requests.exceptions.RequestException:
-            logger.debug(traceback.format_exc(2, chain=False))
-            logger.error(FAIL_MSG.format(
-                url,
-                traceback.format_exc(0, chain=False),
-            ))
+    with IncrementalBar(
+        'In Progress',
+        max=len(files_path),
+        suffix='%(percent)d%%',
+    ) as progress_bar:
+        for url, local_name in files_path.items():
+            try:  # noqa: WPS229
+                resource = get_content(url)
+                local_path = os.path.join(dir_path, local_name)
+                save(local_path, resource, 'wb')
+                progress_bar.next()
+            except requests.exceptions.RequestException:
+                logger.debug(traceback.format_exc(2, chain=False))
+                logger.error(FAIL_MSG.format(
+                    url,
+                    traceback.format_exc(0, chain=False),
+                ))
 
 
 def download_updated_files(
