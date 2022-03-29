@@ -10,6 +10,23 @@ from page_loader.logger.exceptions import FileSystemError, NetworkError
 
 TEST_URL = 'http://test.com'
 
+STATUS_CODES = [
+    pytest.param(
+        102,
+        marks=pytest.mark.xfail,
+    ),
+    pytest.param(
+        200,
+        marks=pytest.mark.xfail,
+    ),
+    pytest.param(
+        303,
+        marks=pytest.mark.xfail,
+    ),
+    404,
+    503,
+]
+
 
 def test_loader(requests_mock):
     """Test for correct output and content.
@@ -38,14 +55,15 @@ def test_download_io_error(requests_mock):
         download(TEST_URL, '/directory/doesnt/exist')
 
 
-def test_download_network_error():
+@pytest.mark.parametrize('test_code', STATUS_CODES)
+def test_download_network_error(test_code):
     """Test raising NetworkError.
 
     Args:
-        requests_mock: for mocking test url.
+        test_code: error status codes.
     """
     with requests_mock.Mocker() as mock:
-        mock.get(TEST_URL, status_code=404)
+        mock.get(TEST_URL, status_code=test_code)
         with tempfile.TemporaryDirectory() as tmpdirname:
             with pytest.raises(NetworkError):
                 download(TEST_URL, tmpdirname)
