@@ -9,13 +9,18 @@ from page_loader.logger.logger_setup import setup_logging
 setup_logging()
 
 
-def main() -> None:
-    """Run page-loader."""
+def main() -> str:
+    """Run page-loader.
+
+    Returns:
+        str.
+    """
     url, dir_path = parse_arguments()
     try:
-        download(url, dir_path)
+        local_page_path = download(url, dir_path)
     except (NetworkError, FileSystemError):
         sys.exit(1)
+    return local_page_path
 
 
 if __name__ == '__main__':
