@@ -12,17 +12,13 @@ setup_logging()
 
 
 def main() -> None:
-    """Run page-loader.
-
-    Returns:
-        str.
-    """
+    """Run page-loader."""
     url, dir_path = parse_arguments()
     try:
         local_page_path = download(url, dir_path)
     except (NetworkError, FileSystemError):
         sys.exit(1)
-    print(SUCCESS_DOWNLOAD_MSG.format(local_page_path))
+    print(SUCCESS_DOWNLOAD_MSG.format(local_page_path))  # noqa: WPS421
 
 
 if __name__ == '__main__':
