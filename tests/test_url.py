@@ -3,16 +3,10 @@
 import pytest
 from page_loader.loader import url
 
-TEST_TEMPLATE = (
-    (
-        'https://en.wikipedia.org/wiki/Python',
-        'en-wikipedia-org-wiki-Python.html',
-    ),
-    (
-        'www.wikipedia.org/wiki/Python',
-        'www-wikipedia-org-wiki-Python.html',
-    ),
-)
+TEST_TEMPLATE = [
+    ['https://en.wikipedia.org/Python', 'en-wikipedia-org-Python.html'],
+    ['https://en.wikipedia.org/Python.js', 'en-wikipedia-org-Python.js'],
+]
 
 
 @pytest.mark.parametrize('test_case, expected_result', TEST_TEMPLATE)
