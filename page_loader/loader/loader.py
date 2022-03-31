@@ -10,7 +10,6 @@ from page_loader.loader.url import get_name
 from page_loader.logger.exceptions import FileSystemError, NetworkError
 from progress.bar import IncrementalBar
 
-SUCCESS_DOWNLOAD_MSG = 'Page was successfully downloaded into {0}'
 SUCCESS_MSG = 'Successfully downloaded: {0}'
 FAIL_MSG = 'Failed to download: {0} \n{1}'
 DENY_MSG = 'Permission to {0} denied.'
@@ -57,7 +56,6 @@ def download(url: str, dir_path: str) -> str:  # noqa: WPS210
     if upd_files_paths:
         download_updated_files(dir_path, local_files_path, upd_files_paths)
 
-    logger.info(SUCCESS_DOWNLOAD_MSG.format(local_page_path))
     return local_page_path
 
 
