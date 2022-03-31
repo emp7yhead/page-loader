@@ -11,7 +11,7 @@ SUCCESS_DOWNLOAD_MSG = 'Page was successfully downloaded into {0}'
 setup_logging()
 
 
-def main() -> str:
+def main() -> None:
     """Run page-loader.
 
     Returns:
@@ -22,7 +22,7 @@ def main() -> str:
         local_page_path = download(url, dir_path)
     except (NetworkError, FileSystemError):
         sys.exit(1)
-    return SUCCESS_DOWNLOAD_MSG.format(local_page_path)
+    print(SUCCESS_DOWNLOAD_MSG.format(local_page_path))
 
 
 if __name__ == '__main__':
