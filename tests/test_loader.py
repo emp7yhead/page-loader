@@ -2,39 +2,22 @@
 
 import os
 import tempfile
+
 import pytest
 import requests
 import requests_mock
-from page_loader.loader.loader import download
-from page_loader.logger.exceptions import FileSystemError, NetworkError
+from page_loader.loader.loader import download, get_content, save
 
 TEST_URL = 'http://test.com'
 
-STATUS_CODES = [
-    pytest.param(
-        102,
-        marks=pytest.mark.xfail,
-    ),
-    pytest.param(
-        200,
-        marks=pytest.mark.xfail,
-    ),
-    pytest.param(
-        303,
-        marks=pytest.mark.xfail,
-    ),
-    404,
-    503,
-]
+
+@pytest.fixture
+def page_without_resources():
+    return '<html>\n</html>'
 
 
-def test_loader(requests_mock):
-    """Test for correct output and content.
-
-    Args:
-        requests_mock: for mocking test url.
-    """
-    requests_mock.get(TEST_URL, text='<html>\n</html>')
+def test_download(requests_mock, page_without_resources):
+    requests_mock.get(TEST_URL, text=page_without_resources)
     with tempfile.TemporaryDirectory() as tmpdirname:
         path = tmpdirname
         page_path = download(TEST_URL, path)
@@ -44,26 +27,17 @@ def test_loader(requests_mock):
     assert expected_path == page_path
 
 
-def test_download_io_error(requests_mock):
-    """Test raising FileSystemError.
-
-    Args:
-        requests_mock: for mocking test url.
-    """
-    requests_mock.get(TEST_URL, text='<html>\n</html>')
-    with pytest.raises(FileSystemError):
-        download(TEST_URL, '/directory/doesnt/exist')
+def test_save():
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        test_path = os.path.join(tmpdirname, 'test')
+        result_test_path = save(test_path, 'hello')
+        with open(result_test_path, 'r') as test_file:
+            assert test_file.read() == 'hello'
+    assert result_test_path == test_path
 
 
-@pytest.mark.parametrize('test_code', STATUS_CODES)
-def test_download_network_error(test_code):
-    """Test raising NetworkError.
-
-    Args:
-        test_code: error status codes.
-    """
+def test_get_content():
     with requests_mock.Mocker() as mock:
-        mock.get(TEST_URL, status_code=test_code)
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            with pytest.raises(NetworkError):
-                download(TEST_URL, tmpdirname)
+        test_content = 'bytestring'.encode()
+        mock.get(TEST_URL, content=test_content)
+        assert get_content(TEST_URL) == test_content
