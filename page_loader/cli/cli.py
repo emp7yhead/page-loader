@@ -31,7 +31,7 @@ def parse_arguments():
         '-v',
         '--version',
         action='version',
-        version='page-loader 0.1.0',
+        version='page-loader 0.4.0',
     )
     parser.add_argument(
         '-h',
