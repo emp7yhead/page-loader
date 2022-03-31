@@ -46,7 +46,7 @@ CONFIG_DICT = {
 
     'loggers': {
         'page_loader.loader.loader': {
-            'level': 'INFO',
+            'level': 'WARNING',
             'handlers': ['console', 'info_file_handler'],
             'propagate': False,
         },
