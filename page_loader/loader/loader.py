@@ -5,9 +5,9 @@ import traceback
 from typing import Dict, Union
 
 import requests
+from page_loader.loader.exceptions import FileSystemError, NetworkError
 from page_loader.loader.parser import prepare_resourses
 from page_loader.loader.url import get_name
-from page_loader.logger.exceptions import FileSystemError, NetworkError
 from progress.bar import IncrementalBar
 
 SUCCESS_MSG = 'Successfully downloaded: {0}'
