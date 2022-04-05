@@ -2,8 +2,8 @@
 import sys
 
 from page_loader.cli.cli import parse_arguments
+from page_loader.loader.exceptions import FileSystemError, NetworkError
 from page_loader.loader.loader import download
-from page_loader.logger.exceptions import FileSystemError, NetworkError
 from page_loader.logger.logger_setup import setup_logging
 
 SUCCESS_DOWNLOAD_MSG = 'Page was successfully downloaded into {0}'

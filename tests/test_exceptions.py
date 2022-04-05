@@ -3,7 +3,7 @@ import pytest
 import tempfile
 import requests_mock
 from page_loader.loader.loader import download
-from page_loader.logger.exceptions import FileSystemError, NetworkError
+from page_loader.loader.exceptions import FileSystemError, NetworkError
 
 TEST_URL = 'http://test.com'
 
