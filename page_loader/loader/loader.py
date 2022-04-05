@@ -29,20 +29,8 @@ def download(url: str, dir_path: str) -> str:  # noqa: WPS210
 
     Returns:
         str.
-
-    Raises:
-        NetworkError: exception while sending request.
     """
-    try:
-        page = get_content(url)
-    except requests.exceptions.RequestException as exp:
-        logger.debug(traceback.format_exc(2, chain=False))
-        logger.error(FAIL_MSG.format(
-            url,
-            traceback.format_exc(0, chain=False),
-        ))
-        raise NetworkError from exp
-
+    page = get_content(url)
     local_page_name = get_name(url)
     local_page_path = os.path.join(dir_path, local_page_name)
     local_files_path = get_name(url, extension=FOLDER_NAME)
@@ -135,8 +123,21 @@ def get_content(url: str) -> bytes:
 
     Returns:
         bytes
+
+    Raises:
+        NetworkError: exception while sending request.
     """
     response = requests.get(url)
-    response.raise_for_status()
+
+    try:
+        response.raise_for_status()
+    except requests.exceptions.RequestException as exp:
+        logger.debug(traceback.format_exc(2, chain=False))
+        logger.error(FAIL_MSG.format(
+            url,
+            traceback.format_exc(0, chain=False),
+        ))
+        raise NetworkError from exp
+
     logger.debug(GOT_CONTENT_MSG.format(url))
     return response.content
