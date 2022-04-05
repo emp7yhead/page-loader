@@ -5,7 +5,7 @@ import traceback
 from typing import Dict, Union
 
 import requests
-from page_loader.loader.parser import update_page_and_files
+from page_loader.loader.parser import prepare_resourses
 from page_loader.loader.url import get_name
 from page_loader.logger.exceptions import FileSystemError, NetworkError
 from progress.bar import IncrementalBar
@@ -34,7 +34,7 @@ def download(url: str, dir_path: str) -> str:  # noqa: WPS210
     local_page_name = get_name(url)
     local_page_path = os.path.join(dir_path, local_page_name)
     local_files_path = get_name(url, extension=FOLDER_NAME)
-    updated_page, upd_files_paths = update_page_and_files(
+    updated_page, upd_files_paths = prepare_resourses(
         page,
         url,
         local_files_path,

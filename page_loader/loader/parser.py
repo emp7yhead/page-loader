@@ -19,7 +19,7 @@ ATTRIBUTES = {  # noqa: WPS407
 }
 
 
-def update_page_and_files(  # noqa: WPS210
+def prepare_resourses(  # noqa: WPS210
     page: Any,
     url: str,
     files_dir: str,
