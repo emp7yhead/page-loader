@@ -5,8 +5,6 @@ import re
 from typing import Tuple
 from urllib.parse import urlparse
 
-FILE_NAME_TEMPLATE = '{0}{1}'
-
 
 def get_name(url: str, extension: str = '.html') -> str:
     """Get file name for downloading.
@@ -22,7 +20,7 @@ def get_name(url: str, extension: str = '.html') -> str:
     if ext:
         extension = ext
     file_name = re.sub(r'[^\w]', '-', url_without_scheme.rstrip('/'))
-    return FILE_NAME_TEMPLATE.format(file_name, extension)
+    return file_name + extension
 
 
 def get_url_without_scheme_and_ext(url: str) -> Tuple:
