@@ -10,12 +10,19 @@ TEST_TEMPLATE = [
 
 
 @pytest.mark.parametrize('test_case, expected_result', TEST_TEMPLATE)
-def test_get_name(test_case, expected_result):
+def test_get_file_name(test_case, expected_result):
     """Test for url with and without scheme.
 
     Args:
         test_case: test url with/without scheme.
         expected_result: corect function result.
     """
-    test_result = url.get_name(test_case)
+    test_result = url.get_file_name(test_case)
+    assert test_result == expected_result
+
+
+def test_get_folder_name():
+    """Test for url with and without scheme."""
+    test_result = url.get_folder_name('https://en.wikipedia.org/Python')
+    expected_result = 'en-wikipedia-org-Python_files'
     assert test_result == expected_result
