@@ -4,7 +4,7 @@ from typing import Any, Dict, Tuple
 from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
-from page_loader.loader.url import get_name
+from page_loader.loader.url import get_file_name
 
 TAGS = (
     'img',
@@ -45,7 +45,7 @@ def prepare_resourses(  # noqa: WPS210
         full_url = urljoin(url, url_to_media)
 
         if is_local(full_url, url):
-            local_file_name = get_name(full_url)
+            local_file_name = get_file_name(full_url)
             upd_files_paths[full_url] = local_file_name
             tag[name] = os.path.join(files_dir, local_file_name)
 

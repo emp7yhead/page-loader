@@ -7,7 +7,7 @@ from typing import Dict, Union
 import requests
 from page_loader.loader.exceptions import FileSystemError, NetworkError
 from page_loader.loader.parser import prepare_resourses
-from page_loader.loader.url import get_name
+from page_loader.loader.url import get_folder_name, get_file_name
 from progress.bar import IncrementalBar
 
 SUCCESS_MSG = 'Successfully downloaded: {0}'
@@ -15,7 +15,6 @@ FAIL_MSG = 'Failed to download: {0} \n{1}'
 DENY_MSG = 'Permission to {0} denied.'
 GOT_CONTENT_MSG = 'Got content from {0}'
 STATUS_MSG = 'URL: {0}, status code: {1}'
-FOLDER_NAME = '_files'
 
 logger = logging.getLogger(__name__)
 
@@ -31,9 +30,9 @@ def download(url: str, dir_path: str) -> str:  # noqa: WPS210
         str.
     """
     page = get_content(url)
-    local_page_name = get_name(url)
+    local_page_name = get_file_name(url)
     local_page_path = os.path.join(dir_path, local_page_name)
-    local_files_path = get_name(url, extension=FOLDER_NAME)
+    local_files_path = get_folder_name(url)
     updated_page, upd_files_paths = prepare_resourses(
         page,
         url,
