@@ -18,8 +18,7 @@ def get_file_name(url: str) -> str:
     Returns:
             str
     """
-    url_without_scheme, ext = get_url_without_scheme_and_ext(url)
-    file_name = re.sub(r'[^\w]', '-', url_without_scheme.rstrip('/'))
+    file_name, ext = get_file_name_and_ext(url)
     if ext:
         return file_name + ext
     return file_name + HTML_EXT
@@ -34,13 +33,12 @@ def get_folder_name(url: str) -> str:
     Returns:
             str
     """
-    url_without_scheme, _ = get_url_without_scheme_and_ext(url)
-    file_name = re.sub(r'[^\w]', '-', url_without_scheme.rstrip('/'))
+    file_name, _ = get_file_name_and_ext(url)
     return file_name + FOLDER_NAME
 
 
-def get_url_without_scheme_and_ext(url: str) -> Tuple:
-    """Get url without scheme and extension.
+def get_file_name_and_ext(url: str) -> Tuple:
+    """Get formatted file name and extension.
 
     Args:
         url: url for file or page.
@@ -51,4 +49,5 @@ def get_url_without_scheme_and_ext(url: str) -> Tuple:
     parsed_url = urlparse(url)
     root, ext = os.path.splitext(parsed_url.path)
     url_without_scheme = os.path.join(parsed_url.netloc + root)
-    return url_without_scheme, ext
+    file_name = re.sub(r'[^\w]', '-', url_without_scheme.rstrip('/'))
+    return file_name, ext
