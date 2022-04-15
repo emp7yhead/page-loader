@@ -6,12 +6,6 @@ from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 from page_loader.loader.url import get_file_name
 
-TAGS = (
-    'img',
-    'link',
-    'script',
-)
-
 ATTRIBUTES = {  # noqa: WPS407
     'img': 'src',
     'link': 'href',
@@ -37,7 +31,7 @@ def prepare_resourses(  # noqa: WPS210
     """
     upd_files_paths = {}
     soup = BeautifulSoup(page, 'html.parser')
-    tags = soup.find_all(TAGS)
+    tags = soup.find_all(ATTRIBUTES)
 
     for tag in tags:
         name = ATTRIBUTES[tag.name]
