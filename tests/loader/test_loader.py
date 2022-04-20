@@ -9,11 +9,11 @@ import requests_mock
 from page_loader.loader.loader import download, get_content, save
 
 TEST_URL = 'http://test.com'
-TEST_PAGE = os.path.join(os.getcwd(), 'tests/fixtures/test_page.html')
-TEST_IMG = os.path.join(os.getcwd(), 'tests/fixtures/content/test_img.png')
-TEST_CSS = os.path.join(os.getcwd(), 'tests/fixtures/content/test_style.css')
-TEST_JS = os.path.join(os.getcwd(), 'tests/fixtures/content/test_script.js')
-EXPECTED_PAGE = os.path.join(os.getcwd(), 'tests/fixtures/expected_result.html')
+TEST_PAGE = os.path.join(os.getcwd(), 'tests/loader/fixtures/test_page.html')
+TEST_IMG = os.path.join(os.getcwd(), 'tests/loader/fixtures/content/test_img.png')
+TEST_CSS = os.path.join(os.getcwd(), 'tests/loader/fixtures/content/test_style.css')
+TEST_JS = os.path.join(os.getcwd(), 'tests/loader/fixtures/content/test_script.js')
+EXPECTED_PAGE = os.path.join(os.getcwd(), 'tests/loader/fixtures/expected_result.html')
 
 
 @pytest.fixture
