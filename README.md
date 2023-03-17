@@ -1,8 +1,8 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/emp7yhead/python-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/emp7yhead/python-project-lvl3/actions) 
-[![Maintainability](https://api.codeclimate.com/v1/badges/8dbf515e6079dcb5e358/maintainability)](https://codeclimate.com/github/emp7yhead/python-project-lvl3/maintainability) 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/8dbf515e6079dcb5e358/test_coverage)](https://codeclimate.com/github/emp7yhead/python-project-lvl3/test_coverage) 
-[![CI](https://github.com/emp7yhead/python-project-lvl3/actions/workflows/CI.yml/badge.svg)](https://github.com/emp7yhead/python-project-lvl3/actions/workflows/CI.yml) 
+### Tests and linter status:
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/8dbf515e6079dcb5e358/maintainability)](https://codeclimate.com/github/emp7yhead/python-project-lvl3/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/8dbf515e6079dcb5e358/test_coverage)](https://codeclimate.com/github/emp7yhead/python-project-lvl3/test_coverage)
+[![CI](https://github.com/emp7yhead/python-project-lvl3/actions/workflows/CI.yml/badge.svg)](https://github.com/emp7yhead/python-project-lvl3/actions/workflows/CI.yml)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 
 # page-loader
