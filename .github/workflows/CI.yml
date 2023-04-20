@@ -1,7 +1,7 @@
 name: CI
 on: push
 jobs:
- linter-check:   
+ linter-check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,9 +17,9 @@ jobs:
         run: |
           pip install poetry
           make install
-      - name: Run linter
+      - name: Run all checks
         run: |
-          make lint
+          make check
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
         env:
