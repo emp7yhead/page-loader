@@ -1,24 +1,19 @@
-"""Page-loader main script."""
+import asyncio
+import logging
 import sys
 
-from page_loader.cli.cli import parse_arguments
-from page_loader.loader.exceptions import FileSystemError, NetworkError
-from page_loader.loader.loader import download
-from page_loader.logger.logger_setup import setup_logging
-
-SUCCESS_DOWNLOAD_MSG = 'Page was successfully downloaded into {0}'
-
-setup_logging()
+from page_loader.runner import run_script
 
 
 def main() -> None:
-    """Run page-loader."""
-    url, dir_path = parse_arguments()
+    logging.basicConfig(level=logging.INFO)
+
     try:
-        local_page_path = download(url, dir_path)
-    except (NetworkError, FileSystemError):
+        path = asyncio.run(run_script())
+        logging.info(f'successfully downloaded in {path}')
+    except Exception as e:
+        logging.error(e)
         sys.exit(1)
-    print(SUCCESS_DOWNLOAD_MSG.format(local_page_path))  # noqa: WPS421
 
 
 if __name__ == '__main__':

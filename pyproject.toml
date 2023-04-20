@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hexlet-code"
-version = "0.4.0"
+version = "1.4.0"
 description = "CLI-utilite for downloading web-pages in chosen directory"
 authors = ["emp7yhead <artyomkropp@gmail.com>"]
 packages = [
@@ -12,15 +12,18 @@ page-loader = "page_loader.scripts.page_loader:main"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-requests = "^2.27.1"
 beautifulsoup4 = "^4.10.0"
 progress = "^1.6"
+httpx = "^0.24.0"
 
-[tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-wemake-python-styleguide = "^0.16.0"
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
 pytest-cov = "^3.0.0"
-requests-mock = "^1.9.3"
+mypy = "^1.2.0"
+pytest-asyncio = "^0.21.0"
+flake8 = "^6.0.0"
+flake8-isort = "^6.0.0"
+respx = "^0.20.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

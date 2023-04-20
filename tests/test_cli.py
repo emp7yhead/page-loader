@@ -1,7 +1,7 @@
 """Tests for cli."""
 
 import pytest
-from page_loader.cli import cli
+from page_loader import cli
 
 
 def test_cli_without_arg():
