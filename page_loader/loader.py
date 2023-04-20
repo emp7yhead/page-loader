@@ -9,7 +9,7 @@ from page_loader.url import to_dir_name, to_file_name
 logger = logging.getLogger(__name__)
 
 
-async def download(target_url: str, output_path: str) -> str:
+async def download(target_url: str, output_path: Path) -> str:
     """Save web-page as file.
 
     Args:
